@@ -1,0 +1,43 @@
+﻿using System.ComponentModel.DataAnnotations; // Para o Enum, se usar
+
+namespace UserManagement.API.Models; // Certifique-se que o namespace está correto
+
+// Enum para o Status da Tarefa 
+public enum StatusTarefa
+{
+    [Display(Name = "Agendada")]
+    Agendada,
+    [Display(Name = "Em Andamento")]
+    EmAndamento,
+    [Display(Name = "Realizada")]
+    Realizada,
+    [Display(Name = "Cancelada")]
+    Cancelada,
+    [Display(Name = "Pendente Aprovação")]
+    PendenteAprovacao
+}
+
+public class Tarefa
+{
+    public int Id { get; set; }
+    public required string Nome { get; set; }
+    public string? Descricao { get; set; }
+    public DateTime DataAgendamento { get; set; } // Data em que a tarefa deve ser iniciada/focada
+    public DateTime DataLimiteFinalizacao { get; set; } // Prazo final
+    public StatusTarefa Status { get; set; } = StatusTarefa.Agendada; // Valor padrão
+    public string? EvidenciaUrl { get; set; } // Para link/path da foto
+    public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+    public DateTime? DataConclusao { get; set; } // Quando foi efetivamente concluída
+
+    // Chave Estrangeira para o Usuário responsável pela execução
+    public int ResponsavelId { get; set; }
+    public User Responsavel { get; set; } = null!; // O "null!" indica ao compilador que será inicializado
+
+    // Chave Estrangeira para o Usuário que criou a tarefa (Coordenador)
+    public int CriadorId { get; set; }
+    public User Criador { get; set; } = null!;
+
+    // Chave Estrangeira para o Setor ao qual a tarefa pertence
+    public int SetorId { get; set; }
+    public Setor Setor { get; set; } = null!;
+}
