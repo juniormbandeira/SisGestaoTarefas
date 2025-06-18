@@ -6,30 +6,38 @@ public static class TarefaDto
 {
     public class CreateRequest
     {
-        [Required]
-        public required string Nome { get; set; }
-        [Required]
-        public required Setor Setor { get; set; }
-        [Required]
- 
+        public int? id { get; set;}
+        public string? Nome { get; set; }
+        public string? Descricao { get; set; }
         public DateTime? HorarioFinalizacao { get; set; }
+        public string? Status { get; set; }
+        public string? Evidencia { get; set; }
+        public int? Peso { get; set; }
+        public int? SetorId { get; set; }  // Referência ao Setor
     }
+
 
     public class UpdateRequest
     {
-        [Required]
-        public int Id { get; set; }
+        public int? id { get; set; }
+        public string? Nome { get; set; }
+        public string? Descricao { get; set; }
+        public DateTime? HorarioFinalizacao { get; set; }
         public string? Status { get; set; }
         public string? Evidencia { get; set; }
+        public int? Peso { get; set; }
+        public int? SetorId { get; set; }
     }
 
     public class Response
     {
-        public int Id { get; set; }
-        public required string Nome { get; set; }
-        public required Setor Setor { get; set; }
+        public int? Id { get; set; }  // Adicione isso
+        public string? Nome { get; set; }
+        public string? Descricao { get; set; }
         public DateTime? HorarioFinalizacao { get; set; }
         public string? Status { get; set; }
         public string? Evidencia { get; set; }
+        public int? Peso { get; set; }
+        public int? SetorId { get; set; }
     }
 }

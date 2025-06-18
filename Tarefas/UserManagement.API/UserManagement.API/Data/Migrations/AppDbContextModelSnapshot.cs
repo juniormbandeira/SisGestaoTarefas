@@ -48,25 +48,24 @@ namespace UserManagement.API.Data.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Evidencia")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("HorarioFinalizacao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("SetorId")
+                    b.Property<int?>("Peso")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SetorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -80,9 +79,7 @@ namespace UserManagement.API.Data.Migrations
                 {
                     b.HasOne("UserManagement.API.Models.Setor", "Setor")
                         .WithMany("Tarefas")
-                        .HasForeignKey("SetorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SetorId");
 
                     b.Navigation("Setor");
                 });
