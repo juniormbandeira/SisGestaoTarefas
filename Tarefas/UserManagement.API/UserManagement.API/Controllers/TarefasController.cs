@@ -19,6 +19,10 @@ public class TarefasController : ControllerBase
         try
         {
             var tarefa = await _tarefaService.CreateTarefa(dto);
+
+            if (tarefa == null)
+                return BadRequest(new { message = "Loja associada não encontrada." });
+
             return CreatedAtAction(nameof(GetById), new { id = tarefa.Id }, tarefa);
         }
         catch (ArgumentException ex)
@@ -44,7 +48,6 @@ public class TarefasController : ControllerBase
         try
         {
             await _tarefaService.AtualizarTarefaAsync(id, dto);
-
             return NoContent();
         }
         catch (KeyNotFoundException)

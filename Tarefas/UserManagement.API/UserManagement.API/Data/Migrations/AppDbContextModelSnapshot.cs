@@ -22,6 +22,23 @@ namespace UserManagement.API.Data.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("UserManagement.API.Models.Loja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lojas");
+                });
+
             modelBuilder.Entity("UserManagement.API.Models.Setor", b =>
                 {
                     b.Property<int>("Id")
@@ -56,6 +73,9 @@ namespace UserManagement.API.Data.Migrations
                     b.Property<DateTime?>("HorarioFinalizacao")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("LojaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
@@ -70,6 +90,8 @@ namespace UserManagement.API.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LojaId");
+
                     b.HasIndex("SetorId");
 
                     b.ToTable("Tarefas");
@@ -77,11 +99,24 @@ namespace UserManagement.API.Data.Migrations
 
             modelBuilder.Entity("UserManagement.API.Models.Tarefa", b =>
                 {
+                    b.HasOne("UserManagement.API.Models.Loja", "Loja")
+                        .WithMany("Tarefas")
+                        .HasForeignKey("LojaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("UserManagement.API.Models.Setor", "Setor")
                         .WithMany("Tarefas")
                         .HasForeignKey("SetorId");
 
+                    b.Navigation("Loja");
+
                     b.Navigation("Setor");
+                });
+
+            modelBuilder.Entity("UserManagement.API.Models.Loja", b =>
+                {
+                    b.Navigation("Tarefas");
                 });
 
             modelBuilder.Entity("UserManagement.API.Models.Setor", b =>

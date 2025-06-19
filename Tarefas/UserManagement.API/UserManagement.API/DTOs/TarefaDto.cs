@@ -14,6 +14,8 @@ public static class TarefaDto
         public string? Evidencia { get; set; }
         public int? Peso { get; set; }
         public int? SetorId { get; set; }  // Referência ao Setor
+        public int LojaId { get; set; }  // Id da loja
+
     }
 
 
@@ -27,6 +29,7 @@ public static class TarefaDto
         public string? Evidencia { get; set; }
         public int? Peso { get; set; }
         public int? SetorId { get; set; }
+        public int LojaId { get; set; }  // Id da loja
     }
 
     public class Response
@@ -39,5 +42,7 @@ public static class TarefaDto
         public string? Evidencia { get; set; }
         public int? Peso { get; set; }
         public int? SetorId { get; set; }
+        public int LojaId { get; set; }  // Id da loja
+       
     }
 }

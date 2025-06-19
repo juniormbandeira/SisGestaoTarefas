@@ -7,8 +7,10 @@ public class AppDbContext : DbContext
 {
 	public DbSet<Setor> Setores { get; set; }
 	public DbSet<Tarefa> Tarefas { get; set; }
+    public DbSet<Loja> Lojas { get; set; }
 
-	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

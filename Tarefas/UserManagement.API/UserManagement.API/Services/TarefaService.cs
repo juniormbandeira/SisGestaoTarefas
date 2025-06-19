@@ -22,6 +22,10 @@ public class TarefaService
             throw new ArgumentException("Setor informado não existe.");
         if (string.IsNullOrWhiteSpace(dto.Nome))
             throw new ArgumentException("Nome da tarefa é obrigatório.");
+        // Valida se loja existe
+        var lojaExiste = await _context.Lojas.AnyAsync(l => l.Id == dto.LojaId);
+        if (!lojaExiste)
+            throw new ArgumentException("Loja não encontrada.");
 
         var tarefa = new Tarefa
         {
@@ -31,7 +35,9 @@ public class TarefaService
             Status = "Pendente",
             Evidencia = dto.Evidencia ?? string.Empty,
             Peso = dto.Peso.HasValue ? (dto.Peso.Value > 0 ? dto.Peso.Value : 1) : 1,
+            LojaId = dto.LojaId,
             SetorId = dto.SetorId
+            
         };
 
         _context.Tarefas.Add(tarefa);
@@ -46,7 +52,7 @@ public class TarefaService
             Status = tarefa.Status,
             Evidencia = tarefa.Evidencia,
             Peso = tarefa.Peso,
-            SetorId = tarefa.SetorId
+            SetorId = tarefa.SetorId  
         };
     }
 
@@ -54,6 +60,7 @@ public class TarefaService
     {
         var tarefa = await _context.Tarefas
             .AsNoTracking()
+            .Include(t => t.Loja) // traz a loja junto
             .FirstOrDefaultAsync(t => t.Id == id);
 
         if (tarefa == null) return null;
@@ -68,6 +75,7 @@ public class TarefaService
             Evidencia = tarefa.Evidencia,
             Peso = tarefa.Peso,
             SetorId = tarefa.SetorId
+           
         };
     }
 
