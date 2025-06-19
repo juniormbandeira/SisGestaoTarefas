@@ -9,6 +9,7 @@ public static class TarefaDto
         public int? id { get; set;}
         public string? Nome { get; set; }
         public string? Descricao { get; set; }
+        public DateTime? HorarioInicio { get; set; }
         public DateTime? HorarioFinalizacao { get; set; }
         public string? Status { get; set; }
         public string? Evidencia { get; set; }
@@ -24,6 +25,7 @@ public static class TarefaDto
         public int? id { get; set; }
         public string? Nome { get; set; }
         public string? Descricao { get; set; }
+        public DateTime? HorarioInicio { get; set; }
         public DateTime? HorarioFinalizacao { get; set; }
         public string? Status { get; set; }
         public string? Evidencia { get; set; }
@@ -37,6 +39,7 @@ public static class TarefaDto
         public int? Id { get; set; }  // Adicione isso
         public string? Nome { get; set; }
         public string? Descricao { get; set; }
+        public DateTime? HorarioInicio { get; set; }
         public DateTime? HorarioFinalizacao { get; set; }
         public string? Status { get; set; }
         public string? Evidencia { get; set; }

@@ -31,6 +31,7 @@ public class TarefaService
         {
             Nome = dto.Nome,
             Descricao = dto.Descricao,
+            HorarioInicio = dto.HorarioInicio,
             HorarioFinalizacao = dto.HorarioFinalizacao,
             Status = "Pendente",
             Evidencia = dto.Evidencia ?? string.Empty,
@@ -48,6 +49,7 @@ public class TarefaService
             Id = tarefa.Id,
             Nome = tarefa.Nome,
             Descricao = tarefa.Descricao,
+            HorarioInicio = tarefa.HorarioInicio,
             HorarioFinalizacao = tarefa.HorarioFinalizacao,
             Status = tarefa.Status,
             Evidencia = tarefa.Evidencia,
@@ -70,6 +72,7 @@ public class TarefaService
             Id = tarefa.Id,
             Nome = tarefa.Nome,
             Descricao = tarefa.Descricao,
+            HorarioInicio = tarefa.HorarioInicio,
             HorarioFinalizacao = tarefa.HorarioFinalizacao,
             Status = tarefa.Status,
             Evidencia = tarefa.Evidencia,

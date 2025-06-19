@@ -8,7 +8,9 @@ namespace UserManagement.API.Models
 
 		public string? Descricao { get; set; } = string.Empty;
 
-		public DateTime? HorarioFinalizacao { get; set; }
+        public DateTime? HorarioInicio { get; set; }
+
+        public DateTime? HorarioFinalizacao { get; set; }
 
 		public string? Status { get; set; } = string.Empty;
 

@@ -50,9 +50,6 @@ IISExpress/
 # Test Results
 TestResults/
 
-# Arquivos do Entity Framework Core Migrations
-Migrations/
-
 # Outros arquivos temporários
 _ReSharper*/
 *.ReSharper
