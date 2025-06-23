@@ -11,6 +11,7 @@ public static class TarefaDto
         public string? Descricao { get; set; }
         public DateTime DataAgendamento { get; set; }
         public DateTime DataLimiteFinalizacao { get; set; }
+        public int Peso { get; set; }
         public string Status { get; set; } = string.Empty; // Vamos converter o Enum para string
         public string? EvidenciaUrl { get; set; }
         public DateTime DataCriacao { get; set; }
@@ -24,6 +25,9 @@ public static class TarefaDto
 
         public int SetorId { get; set; }
         public string NomeSetor { get; set; } = string.Empty;
+
+        public int LojaId { get; set; }
+        public string NomeLoja { get; set; } = string.Empty;
     }
 
     // DTO para filtros de consulta (pode ser expandido conforme necessário)
@@ -47,8 +51,10 @@ public static class TarefaDto
         public DateTime DataAgendamento { get; set; }
         public DateTime DataLimiteFinalizacao { get; set; }
         // Status será definido como "Agendada" por padrão no serviço
+        public int Peso { get; set; } = 1;
         public int ResponsavelId { get; set; }
         public int SetorId { get; set; }
+        public int LojaId { get; set; }
         // CriadorId virá do usuário logado
     }
 
@@ -61,7 +67,9 @@ public static class TarefaDto
         public DateTime DataLimiteFinalizacao { get; set; }
         public StatusTarefa Status { get; set; }
         public string? EvidenciaUrl { get; set; }
+        public int Peso { get; set; } = 1;
         public int ResponsavelId { get; set; }
         public int SetorId { get; set; }
+        public int LojaId { get; set; }
     }
 }

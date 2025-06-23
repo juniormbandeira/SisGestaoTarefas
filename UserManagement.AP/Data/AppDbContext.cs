@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Perfil> Perfis { get; set; }
     public DbSet<Setor> Setores { get; set; }
     public DbSet<Tarefa> Tarefas { get; set; }
+    public DbSet<Loja> Lojas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +42,18 @@ public class AppDbContext : DbContext
             .HasForeignKey(t => t.SetorId) // Chave estrangeira em Tarefa
             .OnDelete(DeleteBehavior.Cascade); // Se um Setor for deletado, todas as suas Tarefas associadas também são deletadas.
                                                // Considere .Restrict se não quiser que tarefas sejam deletadas automaticamente.
+
+        // Relacionamento: Tarefa <-> Loja (Uma Tarefa pertence a uma Loja, uma Loja pode ter muitas Tarefas)
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(t => t.Loja)
+            .WithMany(l => l.Tarefas)
+            .HasForeignKey(t => t.LojaId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Valor padrão: se nenhuma loja for informada, usar a Matriz (Id = 1)
+        modelBuilder.Entity<Tarefa>()
+            .Property(t => t.LojaId)
+            .HasDefaultValue(1);
 
         // Relacionamento: Tarefa <-> User (Responsável)
         modelBuilder.Entity<Tarefa>()
@@ -92,6 +105,15 @@ public class AppDbContext : DbContext
            new Setor { Id = setorFinanceiroId, Nome = "Financeiro", Descricao = "Setor de Finanças e Contabilidade" }
         );
 
+        // Seed inicial de Lojas (necessário para associar Tarefas a lojas)
+        var lojaMatrizId = 1;
+        var lojaFilialAId = 2;
+
+        modelBuilder.Entity<Loja>().HasData(
+            new Loja { Id = lojaMatrizId, Nome = "Matriz", Descricao = "Loja principal" },
+            new Loja { Id = lojaFilialAId, Nome = "Filial A", Descricao = "Primeira filial" }
+        );
+
         // 3. Seed inicial de Usuários (NÃO ESTAMOS USANDO SEED PARA USUÁRIOS AQUI)
         // Você deve ter criado os usuários manualmente no banco de dados (ex: IDs 1, 2, 3)
         // com os Perfis e Setores corretos.
@@ -106,7 +128,7 @@ public class AppDbContext : DbContext
 
         // 4. Seed inicial de Tarefas (AGORA ATIVO)
         // Este seed depende que os Usuários e Setores referenciados já existam no banco.
-        modelBuilder.Entity<Tarefa>().HasData(
+            modelBuilder.Entity<Tarefa>().HasData(
             new Tarefa
             {
                 Id = 1,
@@ -114,10 +136,12 @@ public class AppDbContext : DbContext
                 Descricao = "Verificar todos os endpoints e exemplos da documentação da API de usuários.",
                 DataAgendamento = DateTime.UtcNow.Date,
                 DataLimiteFinalizacao = DateTime.UtcNow.Date.AddDays(2),
+                Peso = 3,
                 Status = StatusTarefa.Agendada,
                 ResponsavelId = usuarioFuncionarioDevId, // Precisa existir User com este ID
                 CriadorId = usuarioCoordenadorDevId,     // Precisa existir User com este ID
-                SetorId = setorDevId                     // Precisa existir Setor com este ID
+                SetorId = setorDevId,                    // Precisa existir Setor com este ID
+                LojaId = lojaMatrizId
             },
             new Tarefa
             {
@@ -126,10 +150,12 @@ public class AppDbContext : DbContext
                 Descricao = "Compilar dados para o relatório de progresso da equipe de desenvolvimento.",
                 DataAgendamento = DateTime.UtcNow.Date.AddDays(-(int)DateTime.UtcNow.DayOfWeek).AddDays(1), // Segunda-feira desta semana
                 DataLimiteFinalizacao = DateTime.UtcNow.Date.AddDays(-(int)DateTime.UtcNow.DayOfWeek).AddDays(4), // Quinta
+                Peso = 2,
                 Status = StatusTarefa.EmAndamento,
                 ResponsavelId = usuarioFuncionarioDevId,
                 CriadorId = usuarioCoordenadorDevId,
-                SetorId = setorDevId
+                SetorId = setorDevId,
+                LojaId = lojaMatrizId
             },
             new Tarefa
             {
@@ -138,10 +164,12 @@ public class AppDbContext : DbContext
                 Descricao = "Definir e estimar tarefas para a próxima sprint do projeto X.",
                 DataAgendamento = new DateTime(DateTime.UtcNow.Year, 6, 1), // Exemplo: 1 de Junho
                 DataLimiteFinalizacao = new DateTime(DateTime.UtcNow.Year, 6, 5),
+                Peso = 5,
                 Status = StatusTarefa.Agendada,
                 ResponsavelId = usuarioCoordenadorDevId,
                 CriadorId = usuarioCoordenadorDevId, // Coordenador pode criar tarefa para si ou para outros
-                SetorId = setorDevId
+                SetorId = setorDevId,
+                LojaId = lojaMatrizId
             },
             new Tarefa
             {
@@ -150,10 +178,12 @@ public class AppDbContext : DbContext
                 Descricao = "Realizar entrevistas com os candidatos finalistas para a vaga de Analista de RH.",
                 DataAgendamento = DateTime.UtcNow.Date.AddDays(1), // Amanhã
                 DataLimiteFinalizacao = DateTime.UtcNow.Date.AddDays(3),
+                Peso = 1,
                 Status = StatusTarefa.Agendada,
                 ResponsavelId = usuarioFuncionarioRhId, // Precisa existir User com este ID no setor de RH
                 CriadorId = usuarioCoordenadorDevId,    // Assumindo que o Coordenador de Dev pode pedir algo ao RH
-                SetorId = setorRhId                     // Tarefa do setor de RH
+                SetorId = setorRhId,                    // Tarefa do setor de RH
+                LojaId = lojaFilialAId
             },
             new Tarefa
             {
@@ -162,10 +192,12 @@ public class AppDbContext : DbContext
                 Descricao = "Preparar e apresentar os resultados financeiros do último trimestre.",
                 DataAgendamento = DateTime.UtcNow.Date.AddDays(10),
                 DataLimiteFinalizacao = DateTime.UtcNow.Date.AddDays(15),
+                Peso = 4,
                 Status = StatusTarefa.Agendada,
                 ResponsavelId = usuarioCoordenadorDevId, // Exemplo, poderia ser alguém do Financeiro
                 CriadorId = usuarioCoordenadorDevId,     // Exemplo
-                SetorId = setorFinanceiroId
+                SetorId = setorFinanceiroId,
+                LojaId = lojaFilialAId
             }
         );
     }

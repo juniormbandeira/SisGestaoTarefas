@@ -24,6 +24,7 @@ public class Tarefa
     public string? Descricao { get; set; }
     public DateTime DataAgendamento { get; set; } // Data em que a tarefa deve ser iniciada/focada
     public DateTime DataLimiteFinalizacao { get; set; } // Prazo final
+    public int Peso { get; set; } = 1; // Peso para rankeamento
     public StatusTarefa Status { get; set; } = StatusTarefa.Agendada; // Valor padrão
     public string? EvidenciaUrl { get; set; } // Para link/path da foto
     public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
@@ -40,4 +41,9 @@ public class Tarefa
     // Chave Estrangeira para o Setor ao qual a tarefa pertence
     public int SetorId { get; set; }
     public Setor Setor { get; set; } = null!;
+
+    // Chave Estrangeira para a Loja relacionada
+
+    public int LojaId { get; set; } = 1;
+    public Loja Loja { get; set; } = null!;
 }

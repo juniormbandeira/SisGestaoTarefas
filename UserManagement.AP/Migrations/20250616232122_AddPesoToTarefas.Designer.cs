@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserManagement.API.Data;
 
@@ -10,46 +11,16 @@ using UserManagement.API.Data;
 namespace UserManagement.AP.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250616232122_AddPesoToTarefas")]
+    partial class AddPesoToTarefas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("UserManagement.API.Models.Loja", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lojas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Descricao = "Loja principal",
-                            Nome = "Matriz"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = "Primeira filial",
-                            Nome = "Filial A"
-                        });
-                });
 
             modelBuilder.Entity("UserManagement.API.Models.Perfil", b =>
                 {
@@ -154,11 +125,6 @@ namespace UserManagement.AP.Migrations
                     b.Property<string>("EvidenciaUrl")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("LojaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -180,8 +146,6 @@ namespace UserManagement.AP.Migrations
 
                     b.HasIndex("CriadorId");
 
-                    b.HasIndex("LojaId");
-
                     b.HasIndex("ResponsavelId");
 
                     b.HasIndex("SetorId");
@@ -193,11 +157,10 @@ namespace UserManagement.AP.Migrations
                         {
                             Id = 1,
                             CriadorId = 1,
-                            DataAgendamento = new DateTime(2025, 6, 23, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DataCriacao = new DateTime(2025, 6, 23, 2, 11, 36, 260, DateTimeKind.Utc).AddTicks(1562),
-                            DataLimiteFinalizacao = new DateTime(2025, 6, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataAgendamento = new DateTime(2025, 6, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataCriacao = new DateTime(2025, 6, 16, 23, 21, 21, 590, DateTimeKind.Utc).AddTicks(1330),
+                            DataLimiteFinalizacao = new DateTime(2025, 6, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Verificar todos os endpoints e exemplos da documentação da API de usuários.",
-                            LojaId = 1,
                             Nome = "Revisar Documentação API V1",
                             Peso = 3,
                             ResponsavelId = 2,
@@ -208,11 +171,10 @@ namespace UserManagement.AP.Migrations
                         {
                             Id = 2,
                             CriadorId = 1,
-                            DataAgendamento = new DateTime(2025, 6, 23, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DataCriacao = new DateTime(2025, 6, 23, 2, 11, 36, 260, DateTimeKind.Utc).AddTicks(1582),
-                            DataLimiteFinalizacao = new DateTime(2025, 6, 26, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataAgendamento = new DateTime(2025, 6, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataCriacao = new DateTime(2025, 6, 16, 23, 21, 21, 590, DateTimeKind.Utc).AddTicks(1352),
+                            DataLimiteFinalizacao = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Compilar dados para o relatório de progresso da equipe de desenvolvimento.",
-                            LojaId = 1,
                             Nome = "Preparar Relatório Semanal de Progresso",
                             Peso = 2,
                             ResponsavelId = 2,
@@ -224,10 +186,9 @@ namespace UserManagement.AP.Migrations
                             Id = 3,
                             CriadorId = 1,
                             DataAgendamento = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(2025, 6, 23, 2, 11, 36, 260, DateTimeKind.Utc).AddTicks(1587),
+                            DataCriacao = new DateTime(2025, 6, 16, 23, 21, 21, 590, DateTimeKind.Utc).AddTicks(1361),
                             DataLimiteFinalizacao = new DateTime(2025, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Definir e estimar tarefas para a próxima sprint do projeto X.",
-                            LojaId = 1,
                             Nome = "Planejamento da Sprint de Junho",
                             Peso = 5,
                             ResponsavelId = 1,
@@ -238,11 +199,10 @@ namespace UserManagement.AP.Migrations
                         {
                             Id = 4,
                             CriadorId = 1,
-                            DataAgendamento = new DateTime(2025, 6, 24, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DataCriacao = new DateTime(2025, 6, 23, 2, 11, 36, 260, DateTimeKind.Utc).AddTicks(1595),
-                            DataLimiteFinalizacao = new DateTime(2025, 6, 26, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataAgendamento = new DateTime(2025, 6, 17, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataCriacao = new DateTime(2025, 6, 16, 23, 21, 21, 590, DateTimeKind.Utc).AddTicks(1374),
+                            DataLimiteFinalizacao = new DateTime(2025, 6, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Realizar entrevistas com os candidatos finalistas para a vaga de Analista de RH.",
-                            LojaId = 2,
                             Nome = "Entrevistas Candidatos Analista RH",
                             Peso = 1,
                             ResponsavelId = 3,
@@ -253,11 +213,10 @@ namespace UserManagement.AP.Migrations
                         {
                             Id = 5,
                             CriadorId = 1,
-                            DataAgendamento = new DateTime(2025, 7, 3, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DataCriacao = new DateTime(2025, 6, 23, 2, 11, 36, 260, DateTimeKind.Utc).AddTicks(1598),
-                            DataLimiteFinalizacao = new DateTime(2025, 7, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataAgendamento = new DateTime(2025, 6, 26, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataCriacao = new DateTime(2025, 6, 16, 23, 21, 21, 590, DateTimeKind.Utc).AddTicks(1379),
+                            DataLimiteFinalizacao = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Preparar e apresentar os resultados financeiros do último trimestre.",
-                            LojaId = 2,
                             Nome = "Apresentar Resultados Trimestrais",
                             Peso = 4,
                             ResponsavelId = 1,
@@ -310,12 +269,6 @@ namespace UserManagement.AP.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("UserManagement.API.Models.Loja", "Loja")
-                        .WithMany("Tarefas")
-                        .HasForeignKey("LojaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UserManagement.API.Models.User", "Responsavel")
                         .WithMany("TarefasComoResponsavel")
                         .HasForeignKey("ResponsavelId")
@@ -329,8 +282,6 @@ namespace UserManagement.AP.Migrations
                         .IsRequired();
 
                     b.Navigation("Criador");
-
-                    b.Navigation("Loja");
 
                     b.Navigation("Responsavel");
 
@@ -353,11 +304,6 @@ namespace UserManagement.AP.Migrations
                     b.Navigation("Perfil");
 
                     b.Navigation("Setor");
-                });
-
-            modelBuilder.Entity("UserManagement.API.Models.Loja", b =>
-                {
-                    b.Navigation("Tarefas");
                 });
 
             modelBuilder.Entity("UserManagement.API.Models.Perfil", b =>

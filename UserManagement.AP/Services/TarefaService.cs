@@ -26,6 +26,7 @@ public class TarefaService
             Descricao = tarefa.Descricao,
             DataAgendamento = tarefa.DataAgendamento,
             DataLimiteFinalizacao = tarefa.DataLimiteFinalizacao,
+            Peso = tarefa.Peso,
             Status = tarefa.Status.ToString(),
             EvidenciaUrl = tarefa.EvidenciaUrl,
             DataCriacao = tarefa.DataCriacao,
@@ -35,7 +36,9 @@ public class TarefaService
             CriadorId = tarefa.CriadorId,
             NomeCriador = tarefa.Criador?.Nome ?? "N/A",
             SetorId = tarefa.SetorId,
-            NomeSetor = tarefa.Setor?.Nome ?? "N/A"
+            NomeSetor = tarefa.Setor?.Nome ?? "N/A",
+            LojaId = tarefa.LojaId,
+            NomeLoja = tarefa.Loja?.Nome ?? "N/A"
         };
     }
 
@@ -46,6 +49,7 @@ public class TarefaService
             .Include(t => t.Responsavel)
             .Include(t => t.Criador)
             .Include(t => t.Setor)
+            .Include(t => t.Loja)
             .AsNoTracking(); // Boa prática para consultas de leitura apenas
     }
 
@@ -173,4 +177,33 @@ public class TarefaService
 
         return tarefa == null ? null : MapTarefaToResponseDto(tarefa);
     }
+
+    // Retorna tarefas ordenadas por peso para rankeamento
+    public async Task<IEnumerable<TarefaDto.TarefaResponse>> GetTarefasRankeadasAsync(int? setorIdFiltro = null)
+    {
+        _logger.LogInformation("Buscando tarefas rankeadas. Filtro de setor: {SetorId}", setorIdFiltro);
+        var query = GetTarefasBaseQuery();
+
+        if (setorIdFiltro.HasValue)
+        {
+            query = query.Where(t => t.SetorId == setorIdFiltro.Value);
+        }
+
+        var tarefas = await query.OrderByDescending(t => t.Peso).ToListAsync();
+        return tarefas.Select(MapTarefaToResponseDto);
+    }
+
+    // Retorna todas as tarefas associadas a uma loja específica
+    public async Task<IEnumerable<TarefaDto.TarefaResponse>> GetTarefasPorLojaAsync(int lojaId)
+    {
+        _logger.LogInformation("Buscando tarefas para a loja {LojaId}", lojaId);
+
+        var tarefas = await GetTarefasBaseQuery()
+            .Where(t => t.LojaId == lojaId)
+            .OrderByDescending(t => t.DataAgendamento)
+            .ToListAsync();
+
+        return tarefas.Select(MapTarefaToResponseDto);
+    }
+
 }

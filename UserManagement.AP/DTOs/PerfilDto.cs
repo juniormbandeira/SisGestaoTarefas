@@ -6,7 +6,7 @@ public static class PerfilDto
 {
     // --- Para POST (Criação) ---
     public class CreateRequest
-    {s
+    {
         [Required(ErrorMessage = "Nome do perfil é obrigatório!")]
         [StringLength(50, ErrorMessage = "Nome do perfil deve ter no máximo 50 caracteres!")]
         public required string Nome { get; set; }

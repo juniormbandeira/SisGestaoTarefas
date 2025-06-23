@@ -200,6 +200,48 @@ public class TarefasController : ControllerBase
         }
     }
 
+    // GET: api/tarefas/rankeadas
+    [HttpGet("rankeadas")]
+    public async Task<IActionResult> GetTarefasRankeadas([FromQuery] int? setorId)
+    {
+        _logger.LogInformation("Recebida requisição para GetTarefasRankeadas. SetorId: {SetorId}", setorId);
+        try
+        {
+            var tarefas = await _tarefaService.GetTarefasRankeadasAsync(setorId);
+            if (!tarefas.Any())
+            {
+                return NotFound("Nenhuma tarefa encontrada para o rankeamento.");
+            }
+            return Ok(tarefas);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar tarefas rankeadas.");
+            return StatusCode(500, "Ocorreu um erro interno ao processar sua solicitação.");
+        }
+    }
+
+    // GET: api/tarefas/por-loja/{lojaId}
+    [HttpGet("por-loja/{lojaId:int}")]
+    public async Task<IActionResult> GetTarefasPorLoja(int lojaId)
+    {
+        _logger.LogInformation("Recebida requisição para GetTarefasPorLoja. LojaId: {LojaId}", lojaId);
+        try
+        {
+            var tarefas = await _tarefaService.GetTarefasPorLojaAsync(lojaId);
+            if (!tarefas.Any())
+            {
+                return NotFound($"Nenhuma tarefa encontrada para a loja {lojaId}.");
+            }
+            return Ok(tarefas);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar tarefas por loja.");
+            return StatusCode(500, "Ocorreu um erro interno ao processar sua solicitação.");
+        }
+    }
+
     // GET: api/tarefas/{id}
     [HttpGet("{id:int}", Name = "GetTarefaById")] // Nomear a rota é útil para CreatedAtAction de outros módulos
     public async Task<IActionResult> GetTarefaById(int id)
