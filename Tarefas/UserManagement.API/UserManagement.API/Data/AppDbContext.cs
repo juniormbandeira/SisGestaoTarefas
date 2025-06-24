@@ -18,5 +18,11 @@ public class AppDbContext : DbContext
 			.HasOne(t => t.Setor)
 			.WithMany(s => s.Tarefas)
 			.HasForeignKey(t => t.SetorId);
-	}
+
+        modelBuilder.Entity<Tarefa>()
+             .HasOne(t => t.Loja)
+             .WithMany(l => l.Tarefas)
+             .HasForeignKey(t => t.LojaId)
+             .OnDelete(DeleteBehavior.Cascade);
+    }
 }

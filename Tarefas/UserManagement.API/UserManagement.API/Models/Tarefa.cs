@@ -22,7 +22,7 @@ namespace UserManagement.API.Models
         public int? SetorId { get; set; }
 
 		// Navegação
-		public Setor Setor { get; set; } = null!;
+		public Setor? Setor { get; set; } = null!;
 
         // FK e navegação para Loja
         public int LojaId { get; set; }
