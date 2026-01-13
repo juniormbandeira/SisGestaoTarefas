@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "tarefa-UserManagement.API",
+      "appliesTo": "UserManagement.API/UserManagement.API.sln",
+      "type": "launch"
+    }
+  ]
+}

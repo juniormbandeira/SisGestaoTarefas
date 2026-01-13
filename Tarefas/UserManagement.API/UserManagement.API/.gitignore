@@ -1,0 +1,63 @@
+# Ignore pastas do Visual Studio
+.vs/
+
+# Pastas de build e binários
+bin/
+obj/
+
+# Arquivos de usuário do Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Diretórios do Rider (se usar JetBrains Rider)
+.idea/
+
+# Arquivos gerados pelo Visual Studio Code
+.vscode/
+
+# Pacotes NuGet baixados
+*.nupkg
+packages/
+
+# Cache do NuGet
+.nuget/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de configuração locais
+appsettings.Development.json
+
+# Arquivos de publicação
+*.Publish.xml
+
+# Diretórios de ferramentas
+.toolstarget/
+
+# Arquivos do IIS Express
+IISExpress/
+
+# Arquivos de banco de dados local (SQL Server)
+*.mdf
+*.ldf
+
+# Test Results
+TestResults/
+
+# Outros arquivos temporários
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
